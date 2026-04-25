@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TERRA-SCAN X1 | Intel Feed</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+
+    :root { 
+        --neon-cyan: #00f3ff;
+        --bg-deep: #0a0e14; /* Matches the result page depth */
+        --card-bg: #161b22; 
+        --text-main: #e2e8f0;
+    }
+    
+    body {
+      background-color: var(--bg-deep);
+      /* Subtle carbon fiber texture for that 'action figure' gear look */
+      background-image: 
+        linear-gradient(rgba(10, 14, 20, 0.9), rgba(10, 14, 20, 0.9)),
+        url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+      font-family: 'Rajdhani', sans-serif; 
+      margin: 0; 
+      padding: 20px;
+      color: var(--text-main);
+    }
+
+    .header-title {
+      text-align: center;
+      color: var(--neon-cyan);
+      font-family: 'Orbitron', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 40px;
+      text-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+    }
+
+    .update-feed {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px; /* Increased gap for a more spacious feel */
+      justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .info-tile {
+      background: var(--card-bg);
+      width: 330px;
+      border-radius: 12px; /* Smoother tactical corners */
+      border: 1px solid rgba(0, 243, 255, 0.2);
+      border-top: 5px solid var(--neon-cyan);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+    }
+
+    .info-tile:hover { 
+      transform: translateY(-10px); 
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.15);
+    }
+
+    .tile-img {
+      width: 100%; height: 170px;
+      object-fit: cover;
+      filter: grayscale(30%) brightness(80%); /* Makes images blend with dark theme */
+      transition: 0.3s;
+    }
+
+    .info-tile:hover .tile-img {
+        filter: grayscale(0%) brightness(100%);
+    }
+
+    .tile-body { padding: 15px; flex-grow: 1; }
+
+    .tile-headline {
+      font-size: 1.15rem; /* Exact size preserved */
+      margin: 0 0 10px 0;
+      line-height: 1.2;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+    }
+
+    .tile-headline a { color: #fff; text-decoration: none; transition: 0.2s; }
+    .tile-headline a:hover { color: var(--neon-cyan); }
+    
+    .tile-text { 
+        font-size: 0.9rem; /* Exact size preserved */
+        color: #94a3b8; 
+        margin-bottom: 15px; 
+        line-height: 1.5;
+    }
+
+    .tile-footer { 
+        text-align: left; 
+        padding: 12px 15px; 
+        background: rgba(0,0,0,0.2); 
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .btn-read { 
+        color: var(--neon-cyan); 
+        font-weight: 700; 
+        text-decoration: none; 
+        font-size: 0.85rem; /* Exact size preserved */
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn-read:hover {
+        text-decoration: underline;
+    }
+
+    /* Loading State Color Adjustment */
+    .status-msg {
+        text-align: center; 
+        margin-top: 50px; 
+        color: var(--neon-cyan);
+        font-family: 'Orbitron', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="header-title">Regional Intel Feed</h1>
+
+  {% if articles %}
+    <div class="update-feed">
+      {% for story in articles %}
+        {% if story.title and story.url %}
+          <div class="info-tile">
+            <img src="{{ story.urlToImage or '/static/images/no-image.jpg' }}" 
+                 alt="Update Preview" class="tile-img">
+
+            <div class="tile-body">
+              <h2 class="tile-headline">
+                <a href="{{ story.url }}" target="_blank">
+                  {{ story.title[:85] }}... </a>
+              </h2>
+              <p class="tile-text">
+                {{ (story.description or "No summary provided by source.")[:140] }}...
+              </p>
+            </div>
+
+            <div class="tile-footer">
+              <a href="{{ story.url }}" class="btn-read" target="_blank">View Full Detail →</a>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="status-msg">
+      <p>ACQUIRING LATEST DATA... STANDBY.</p>
+    </div>
+  {% endif %}
+
+</body>
+</html>

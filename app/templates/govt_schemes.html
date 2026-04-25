@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TERRA-SCAN X1 | Economic Support</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap');
+
+    :root { 
+        --neon-cyan: #00f3ff;
+        --neon-green: #39ff14;
+        --bg-deep: #0a0e14;
+        --card-bg: #161b22; 
+        --text-dim: #94a3b8;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      background-image: 
+        linear-gradient(rgba(10, 14, 20, 0.96), rgba(10, 14, 20, 0.96)),
+        url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+      font-family: 'Rajdhani', sans-serif; 
+      margin: 0; 
+      padding: 40px 20px;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--neon-cyan);
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      margin-bottom: 50px;
+      font-size: 2.2rem;
+      text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+    }
+
+    .scheme-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 25px;
+    }
+
+    .scheme-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Corner Accent */
+    .scheme-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, var(--neon-cyan) 0%, transparent 50%);
+        opacity: 0.3;
+    }
+
+    .scheme-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      background: #1c2128;
+    }
+
+    .scheme-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+      padding-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .scheme-card p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      margin-bottom: 15px;
+    }
+
+    .scheme-card strong {
+      color: #fff;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .scheme-card a {
+      margin-top: auto;
+      padding-top: 20px;
+      text-align: right;
+      color: var(--neon-green);
+      font-weight: 700;
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    .scheme-card a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px var(--neon-green);
+    }
+
+    /* Status Label */
+    .data-label {
+        font-size: 0.7rem;
+        color: var(--neon-cyan);
+        opacity: 0.6;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    @media (max-width: 600px) {
+        .scheme-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div style="text-align: center; margin-bottom: 10px;">
+      <span style="font-size: 0.8rem; color: var(--neon-green); letter-spacing: 3px;">DATABASE_V2.0 // GOVT_PROTOCOLS</span>
+  </div>
+  <h1>Economic Support Database</h1>
+
+  <div class="scheme-container">
+    {% for scheme in schemes %}
+      <div class="scheme-card">
+        <span class="data-label">PROTOCOL ACCESS: GRANTED</span>
+        <div class="scheme-name">{{ scheme.name }}</div>
+        
+        <p><strong>Description</strong> {{ scheme.description }}</p>
+        <p><strong>Yield Benefits</strong> {{ scheme.benefits }}</p>
+        <p><strong>User Eligibility</strong> {{ scheme.eligibility }}</p>
+        
+        <a href="{{ scheme.link }}" target="_blank">ACCESS FULL DOSSIER →</a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div style="text-align: center; margin-top: 60px;">
+      <a href="{{ url_for('index') }}" style="color: var(--text-dim); text-decoration: none; font-size: 0.9rem;">
+          [ RETURN TO MAIN TERMINAL ]
+      </a>
+  </div>
+
+</body>
+</html>
